@@ -44,17 +44,14 @@ namespace ConsoleApp1
             }
             Console.Write("Please enter your number conversion base: \nAllowed types: \nBinary - 2 \nOctal - 8 \nDecimal - 10 \nHexadecimal - 16 \nOther type - 17-99\n");
         }
-        public static string RepeatOrNot()
+        public static bool RepeatOrNot(char decision)
         {
-            string yesOrNo;
-            Console.WriteLine("Do you want to enter new number to convert? (y/n): ");
-            yesOrNo = Console.ReadLine();
-            yesOrNo.ToLower();
-            if (yesOrNo == "y") return "yes";
-            if (yesOrNo == "n") return "no";
-            else return "wrongEntry";
+            if (decision == 'y') return true;
+            if (decision == 'n') return false;
+            else { return false; }
         }
-        public static List<string> ConvertNumber(Dictionary<int, char> allSymbols, string formatString, string enteredNum, string formatString1) // Converts entered number to decimal and then to estimated base
+
+        public static List<string> ConvertNumber(string formatString, string enteredNum, string formatString1) // Converts entered number to decimal and then to estimated base
         {
             List<char> tempNumbers = new List<char>();
             List<string> formatedNum = new List<string>();
@@ -62,6 +59,7 @@ namespace ConsoleApp1
             int tempNum = 0;
             int index = 1;
             int quotNumber;
+
             for (int i = 0; i < enteredNum.Length; i++)
             {
                 tempNumbers.Add(enteredNum.ElementAt(i));
@@ -101,22 +99,18 @@ namespace ConsoleApp1
             }
             return finishNumbers;
         }
-        /*  public static Dictionary<int,char> AllSymbols()
-          {
-              Dictionary<int, char> allSymbols = new Dictionary<int, char>();
-              int j = 128;
-
-              for(int i=48;i<j;i++)
-              {
-                  if(i==58)
-                  {
-                      i += 7;
-                  }
-                  allSymbols.Add(i, (char)i);
-
-              }
-              return allSymbols;
-          }*/
+        public static bool CheckEnteredNumber (string enteredNum)
+        {
+            for(int i = 0; i <enteredNum.Length; i++)
+            {
+                if (!allSymbols.Values.Contains(enteredNum[i]))
+                    {
+                    return false;
+                  
+                }
+            }
+            return true;
+        }
 
 
         static void Main(string[] args)
@@ -125,47 +119,43 @@ namespace ConsoleApp1
             string? inputFormat = "";
             string? inputFormat1 = "";
             string? tempNum;
+            char repeatProgram = 'y';
 
-
-            while (errorOrSuccess != "goodFormatFromBinToHex" && errorOrSuccess != "goodFormatFrom17To99")
+            while (RepeatOrNot(repeatProgram))
             {
-                EnterNumberFormat(errorOrSuccess);
-                inputFormat = Console.ReadLine();
-                CheckFormat(inputFormat);
-                errorOrSuccess = CheckFormat(inputFormat);
-            }
-            errorOrSuccess = "";
-            Console.WriteLine($"Success! you entered {inputFormat}.");
-            Console.Write("Enter the number you want to convert: ");
-            tempNum = Console.ReadLine();
-            while (errorOrSuccess != "goodFormatFromBinToHex" && errorOrSuccess != "goodFormatFrom17To99")
-            {
-                EnterNumberFormat(errorOrSuccess);
-                inputFormat1 = Console.ReadLine();
-                CheckFormat(inputFormat1);
-                errorOrSuccess = CheckFormat(inputFormat1);
-            }
-            foreach (var value in ConvertNumber(allSymbols, inputFormat, tempNum, inputFormat1))
-            {
-                Console.Write(value);
-            }
-           
-           /* while (RepeatOrNot() != "wrongEntry")
-            {
-                RepeatOrNot();
-                if(RepeatOrNot()=="n")
+                while (errorOrSuccess != "goodFormatFromBinToHex" && errorOrSuccess != "goodFormatFrom17To99")
                 {
-                    Console.WriteLine("Program ended...");
+                    EnterNumberFormat(errorOrSuccess);
+                    inputFormat = Console.ReadLine();
+                    CheckFormat(inputFormat);
+                    errorOrSuccess = CheckFormat(inputFormat);
                 }
-                if(RepeatOrNot()=="y")
+                errorOrSuccess = "";
+                Console.WriteLine($"Success! you entered {inputFormat}.");
+                Console.Write("Enter the number you want to convert: ");
+                tempNum = Console.ReadLine();
+
+                while (errorOrSuccess != "goodFormatFromBinToHex" && errorOrSuccess != "goodFormatFrom17To99")
                 {
-                    
+                    EnterNumberFormat(errorOrSuccess);
+                    inputFormat1 = Console.ReadLine();
+                    CheckFormat(inputFormat1);
+                    errorOrSuccess = CheckFormat(inputFormat1);
+                }
+                errorOrSuccess = "";
+                foreach (var value in ConvertNumber(inputFormat, tempNum, inputFormat1))
+                {
+                    Console.Write(value);
                 }
 
-            }*/
+                Console.WriteLine("\nDo you want to repeat the program? (y/n): ");
+                repeatProgram = Convert.ToChar(Console.ReadLine());
+            }
+
             Console.ReadKey();
         }
-      
+
+
 
         public static Dictionary<int, char> allSymbols = new Dictionary<int, char>()
     {
@@ -178,6 +168,7 @@ namespace ConsoleApp1
 
     };
     }
+    
 } 
     
 
