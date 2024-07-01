@@ -26,8 +26,8 @@ namespace ConsoleApp1
                     case (int)NumberFormatEnum.Hexadecimal:
                         return "goodFormatFromBinToHex";
                     default:
-                        if (Convert.ToInt32(formatString) >= 17 && Convert.ToInt32(formatString) <= 99) return "goodFormatFrom17To36";
-                        else return "badFormatLessThan17OrMoreThan99";
+                        if (Convert.ToInt32(formatString) >= 17 && Convert.ToInt32(formatString) <= 36) return "goodFormatFrom17To36";
+                        else return "badFormatLessThan17OrMoreThan36";
                 }
             }
             else return "notIntegerFormat";
