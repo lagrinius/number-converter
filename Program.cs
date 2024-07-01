@@ -146,12 +146,13 @@ namespace ConsoleApp1
                     errorOrSuccess = CheckFormat(inputFormat1);
                 }
                 errorOrSuccess = "";
+                Console.Write("Your converted number is: ");
                 foreach (var value in ConvertNumber(inputFormat, tempNum, inputFormat1)) // Prints all finished to convert numbers
                 {
                     Console.Write(value);
                 }
 
-                Console.WriteLine("\nDo you want to repeat the program? (y/n): ");
+                Console.Write("\nDo you want to repeat the program? (y/n): ");
                 repeatProgram = Convert.ToChar(Console.ReadLine());
             }
 
